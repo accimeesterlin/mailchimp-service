@@ -3,6 +3,7 @@ const mailChimpSubscriberPayload = (body) => {
     const latitude = (body && body.latitude);
     const longitude = (body && body.longitude);
     const ipAddress = (body && body.ipAddress);
+    const timezone = (body && body.timezone);
 
     const payload = {
         email_address: email,
@@ -11,12 +12,14 @@ const mailChimpSubscriberPayload = (body) => {
             'YouTube',
             'Videos',
             'Programming'
-        ]
+        ],
+        location: {}
     };
 
     if (latitude && longitude) {
         payload.location.latitude = latitude;
         payload.location.longitude = longitude;
+        payload.location.timezone = timezone;
     }
     
     if (ipAddress) {

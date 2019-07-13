@@ -12,31 +12,35 @@ Outputs:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
-  HelloWorldFunction:
-    Description: Hello World Lambda Function ARN
+  SubscribeHandler:
+    Description: Subscribe Handler Lambda Function ARN
     Value:
       Fn::GetAtt:
-      - HelloWorldFunction
+      - SubscribeHandler
       - Arn
-  HelloWorldFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
+  SubscribeHandlerIamRole:
+    Description: Implicit IAM Role created for Subscribe Handler function
     Value:
       Fn::GetAtt:
-      - HelloWorldFunctionRole
+      - SubscribeHandler
       - Arn
 Resources:
-  HelloWorldFunction:
+  SubscribeHandler:
     Properties:
-      CodeUri: s3://accimeesterlin-mailing-web/623b4d785517c4ec72bce72a09b41216
+      CodeUri: s3://accimeesterlin-mailing-web/fcc387d8db94f84c2d7c40e5162e3d4f
+      Description: Subscribe user to mailchimp mailing lists
       Environment:
         Variables:
-          PARAM1: VALUE
+          API_KEY: VALUE
+          LIST_ID: VALUE
+          USER_NAME: VALUE
       Events:
         HelloWorld:
           Properties:
             Method: post
             Path: /subscribe
           Type: Api
+      FunctionName: SubscribeHandler
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
     Type: AWS::Serverless::Function

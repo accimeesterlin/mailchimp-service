@@ -13,15 +13,20 @@ Globals:
 
 Resources:
 
-    HelloWorldFunction:
+    SubscribeHandler:
         Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
         Properties:
             CodeUri: ./
             Handler: app.lambdaHandler
             Runtime: nodejs8.10
+            FunctionName: SubscribeHandler
+            Description: Subscribe user to mailchimp mailing lists
             Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
                 Variables:
-                    PARAM1: VALUE
+                    LIST_ID: VALUE
+                    API_KEY: VALUE
+                    USER_NAME: VALUE
+
             Events:
                 HelloWorld:
                     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -35,10 +40,10 @@ Outputs:
       Description: "API Gateway endpoint URL for Prod stage for Hello World function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
 
-    HelloWorldFunction:
-      Description: "Hello World Lambda Function ARN"
-      Value: !GetAtt HelloWorldFunction.Arn
+    SubscribeHandler:
+      Description: "Subscribe Handler Lambda Function ARN"
+      Value: !GetAtt SubscribeHandler.Arn
 
-    HelloWorldFunctionIamRole:
-      Description: "Implicit IAM Role created for Hello World function"
-      Value: !GetAtt HelloWorldFunctionRole.Arn
+    SubscribeHandlerIamRole:
+      Description: "Implicit IAM Role created for Subscribe Handler function"
+      Value: !GetAtt SubscribeHandler.Arn
